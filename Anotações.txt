@@ -1,0 +1,5 @@
+A maioria dos arquivos conta com anotações para orientar o aprendizado.
+A pasta node_modules hospeda os módulos intalados que são requeridos nos códigos.
+A pasta views hospeda os HTMLs das páginas do site.
+Os arquivos .json não devem ser excluídos e fazem parte dos módulos do node.
+O arquivo app.js é o principal responsável por carregar, configurar, importar, exportar e ativar o servidor.

@@ -1,0 +1,23 @@
+
+<div class="bg-light p-5 rounded-lg m-3">
+    <h1 class="display-4">Seja bem vindo!</h1>
+    <p class="lead">Este é um blog simples, feito com JavaScript, HTML, CSS, Node.js, Express e MongoDB</p>
+    <hr class="my-4">
+    <p>As publicações tem base no Chat GPT. Espero que goste :)</p>
+    <a class="btn btn-primary btn-lg" href="#" role="button">Crie uma conta</a>
+</div>
+<hr>
+<h2>Postagens recentes</h2>
+{{#each posts}}
+    <div class="card mt-2 mb-2">
+        <div class="card-body">
+            <h4>{{title}}</h4><hr>
+            <h6>{{category.name}}</h6>
+            <p>{{description}}</p>
+            <a href="/post/{{slug}}"><button class="btn btn-primary">Leia mais</button></a><hr>
+            <small>{{#formatDate date}}{{/formatDate}}</small>
+        </div>
+    </div>
+    {{else}}
+        <h4 class="fs4 text-muted mt-4">Nenhuma postagem registrada</h4>
+{{/each}}
