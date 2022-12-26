@@ -134,7 +134,7 @@
                 res.redirect('./')
             })
         })
-    //Postagens
+    //Adicionar postagens
         router.get('/posts', (req, res) => {
             Posts.find().populate('category').lean().sort({date: 'desc'}).then((posts) => {
                 res.render('admin/posts', {posts})
