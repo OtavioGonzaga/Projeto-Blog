@@ -4,9 +4,9 @@
         <form action="/admin/categories/edit" method="post">
             <input type="hidden" name="id" value="{{categories._id}}">
             <label for="name">Nome: </label>
-            <input type="text" id="name" name="name" maxlength="45" placeholder="Nome da categoria" class="form-control" value="{{categories.name}}" required>
+            <input type="text" id="name" name="name" minlength="2" maxlength="50" placeholder="Nome da categoria" class="form-control" value="{{categories.name}}" required>
             <label for="slug">Slug: </label>
-            <input type="text" id="slug" name="slug" maxlength="40" placeholder="Slug da categoria" class="form-control" value="{{categories.slug}}" required> 
+            <input type="text" id="slug" name="slug" minlength="2" maxlength="45" placeholder="Slug da categoria" class="form-control" value="{{categories.slug}}" required> 
             <br>
             <button type="submit" class="btn btn-success">Salvar alterações</button>
         </form>

@@ -3,11 +3,11 @@
         <h2>Nova postagem:</h2>
         <form action="/admin/posts/new" method="post">
             <label for="title">Título:</label>
-            <input type="text" class="form-control" maxlength="60" name="title" id="title" placeholder="Insira o título..." required>
+            <input type="text" class="form-control" minlength="2" maxlength="60" name="title" id="title" placeholder="Insira o título..." required>
             <label for="slug">Slug:</label>
-            <input type="text" class="form-control" id="slug" maxlength="30" name="slug" placeholder="Insira um slug..." required>
+            <input type="text" class="form-control" id="slug" minlength="2" maxlength="40" name="slug" placeholder="Insira um slug..." required>
             <label for="description">Descrição:</label>
-            <input type="text" class="form-control" name="description" maxlength="600" id="description" placeholder="Insira uma descrição..." required>
+            <input type="text" class="form-control" name="description" minlength="10" maxlength="600" id="description" placeholder="Insira uma descrição..." required>
             <label for="category">Categoria:</label>
             <select class="form-select" name="category" id="category" required>
                 <option value="0"></option>
@@ -16,7 +16,7 @@
                 {{/each}}
             </select>
             <label for="content">Conteúdo:</label>
-            <textarea name="content" class="form-control" id="content" rows="5" maxlength="2000" style="resize: none;" placeholder="Escreva sua postagem..." required></textarea>
+            <textarea name="content" class="form-control" id="content" rows="5" minlength="10" maxlength="2000" style="resize: none;" placeholder="Escreva sua postagem..." required></textarea>
             <button type="submit" class="btn btn-success mt-2">Criar postagem</button>
         </form>
         <a href="./"><button class="btn btn-secondary mt-2">Cancelar</button></a>

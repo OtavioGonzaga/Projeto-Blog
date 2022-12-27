@@ -1,4 +1,4 @@
-//Carregando módulos: express
+//Models
     const express = require('express')
     const router = express.Router()
     const mongoose = require('mongoose')
@@ -10,11 +10,29 @@
     setInterval(() => {
         dateAtt = Date.now()
     }, 1000)
-//funções
-    let erros = []
+//Funcitions
+    var erros = []
     function categoryValidation(erros, name, slug) {
+        if (!name || typeof name === undefined || typeof name === null) {
+            erros.push('insira um nome válido')
+        }
+        if (name < 2) {
+            erros.push('Nome muito curto')
+        }
+        if (name > 50) {
+            erros.push('Nome muito grande')
+        }
+        if (!slug || typeof slug === undefined || typeof slug === null) {
+            erros.push('Insira um slug válido')
+        }
         if (slug.includes(" ")) {
             erros.push('O slug não pode conter espaços')
+        }
+        if (slug < 2) {
+            erros.push('Slug muito pequeno')
+        }
+        if (slug > 40) {
+            erros.push('Slug muito grande')
         }
         if (erros.length == 0) {
             return 'correct'
@@ -23,8 +41,38 @@
         }
     }
     function postValidation(erros, title, slug, description,category, content) {
+        if (!slug || typeof slug === undefined || typeof slug === null) {
+            erros.push('Insira um slug válido')
+        }
         if (slug.includes(" ")) {
             erros.push('O slug não pode conter espaços')
+        }
+        if (slug < 2) {
+            erros.push('Slug muito pequeno')
+        }
+        if (slug > 40) {
+            erros.push('Slug muito grande')
+        }
+        if (!title || typeof title === null || typeof title === undefined) {
+            erros.push('Insira um título válido')
+        }
+        if (title.length < 2) {
+            erros.push('Título muito pequeno')
+        }
+        if (title.lenght > 60) {
+            erros.push('Título muito grande')
+        }
+        if (!description || typeof description === undefined ||  typeof description === null) {
+            erros.push('Insira uma descrição válida')
+        }
+        if (description < 10) {
+            erros.push('Descrição muito pequena')
+        }
+        if (description > 600) {
+            erros.push('descrição muito longa')
+        }
+        if (content < 10) {
+            erros.push('É necessário mais conteúdo para uma postagem')
         }
         if (category == '0') {
             erros.push('Selecione uma categoria para a postagem')
@@ -35,7 +83,7 @@
             return 'error'
         }
     }
-//rotas
+//Routes
     //Index
         router.get("/", (req, res) => {
             res.render("admin/index")

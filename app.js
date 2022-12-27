@@ -1,4 +1,4 @@
-//Carregando módulos: express, mongoose
+//Carregando módulos
     const express = require('express')
     const handlebars = require('express-handlebars')
     const moment = require('moment')
@@ -12,6 +12,7 @@
     const Categories = mongoose.model('categories')
     require('./models/Posts')
     const Posts = mongoose.model('posts')
+    const user = require('./routes/user')
 //Configurações
     //sessão
         app.use(session({
@@ -68,7 +69,7 @@
                 res.redirect('/')
             })
         })
-    //Categorias
+    //Categories
         app.get('/categories', (req, res) => {
             Categories.find().lean().sort({name: 'asc'}).then((categorias) => {
                 res.render('categories/index', {categorias})
@@ -105,5 +106,6 @@
         })
 //Outros
     app.use('/admin', admin)
+    app.use('/user', user)
     const port = 2073
     app.listen(port, () => console.log(`Servidor ativo na porta ${port}.`))
