@@ -1,0 +1,17 @@
+<h3>Crie sua conta:</h3>
+<div class="card">
+    <div class="card-body">
+        <form action="/user/register" method="post">
+            <label for="name">Nome:</label>
+            <input type="text" name="name" id="name" class="form-control" minlength="2" maxlength="50"  required>
+            <label for="email">Email:</label>
+            <input type="text" name="email" id="email" class="form-control" required>
+            <label for="password">Senha:</label>
+            <input type="password" name="password" id="password" minlength="6" maxlength="25" class="form-control" required>
+            <label for="password">Repita sua senha:</label>
+            <input type="password" name="password2" id="password2" minlength="6" maxlength="25" class="form-control" required>
+            <button type="submit" class="btn btn-success mt-2">Criar conta</button>
+        </form>
+        <a href="/"><button class="btn btn-secondary mt-2">Cancelar</button></a>
+    </div>
+</div>

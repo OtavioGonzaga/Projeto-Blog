@@ -47,10 +47,10 @@
         if (slug.includes(" ")) {
             erros.push('O slug não pode conter espaços')
         }
-        if (slug < 2) {
+        if (slug.lenght < 2) {
             erros.push('Slug muito pequeno')
         }
-        if (slug > 40) {
+        if (slug.lenght > 40) {
             erros.push('Slug muito grande')
         }
         if (!title || typeof title === null || typeof title === undefined) {
@@ -65,13 +65,13 @@
         if (!description || typeof description === undefined ||  typeof description === null) {
             erros.push('Insira uma descrição válida')
         }
-        if (description < 10) {
+        if (description.lenght < 10) {
             erros.push('Descrição muito pequena')
         }
-        if (description > 600) {
+        if (description.lenght > 600) {
             erros.push('descrição muito longa')
         }
-        if (content < 10) {
+        if (content.lenght < 10) {
             erros.push('É necessário mais conteúdo para uma postagem')
         }
         if (category == '0') {

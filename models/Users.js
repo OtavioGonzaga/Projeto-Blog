@@ -9,9 +9,17 @@ const Users = new Schema({
         type: String,
         required: true
     },
+    adm: {
+        type: Number,
+        default: 0
+    },
     password: {
         type: String,
         required: true
+    },
+    date: {
+        type: Date,
+        default: Date.now()
     }
 })
 mongoose.model('users', Users)
