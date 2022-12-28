@@ -66,31 +66,47 @@
             erros = []
         } else {
             Users.findOne({email: newAccount.email}).then((usuario) => {
-                if(usuario) {
-                    req.flash('error_msg', 'Já existe uma conta com esse e-mail')
-                    res.redirect('./register')
-                } else {
+                if (usuario) {
+                    req.flash('error_msg', 'Já existe uma conta com esse email')
+                    res.redirect('/')
+                } else { //gerar hash de senha
                     bcryptjs.genSalt(10, (erro, salt) => {
-                        bcryptjs.hash(newAccount.password, salt, (erro, hash) => {
-                            if(erro) {
-                                req.flash('error_msg', 'Houve um erro durante o salvamento da conta')
-                                res.redirect('/')
-                            }
-                            newAccount.password = hash
-                            new Users(newAccount).save().then(() => {       
-                                console.log('Conta criada com sucesso')
-                                req.flash('success_msg', 'Conta criada com sucesso')
-                                res.redirect('/') 
-                            }).catch((err) => {
-                                console.log('Erro ao salvar a conta: \n' + err)
-                                req.flash('error_msg', 'Houve um erro interno ao salvar a conta')
-                                res.redirect('/')
+                        if (erro) {
+                            console.log('Erro ao usar o bcryptjs: \n' + erro)
+                            req.flash('error_msg', 'Houve um erro interno durante o registro')
+                            res.redirect('/')
+                        } else {
+                            bcryptjs.hash(newAccount.password, salt, (erro, hash) => {
+                                if (erro) {
+                                    console.log('Houve um erro durante o login: \n' + erro)
+                                    req.flash('error_msg', 'Houve um erro durante o cadastro')
+                                    res.redirect('/')
+                                } else {
+                                    newAccount.password = hash
+                                    new Users(newAccount).save().then((conta) => {
+                                        console.log('Usuário registrado: \n' + conta)
+                                        req.flash('success_msg', 'Usuário registrado com sucesso')
+                                        res.redirect('/')
+                                    }).catch((err) => {
+                                        console.log('Houve um erro interno durante o cadastro: \n' + err)
+                                        req.flash('error_msg', 'Houve um erro interno durante o cadastro')
+                                        res.redirect('/')
+                                    })
+                                }
                             })
-                        })
+                        }
                     })
                 }
+            }).catch((err) => {
+                console.log('Não foi possível encontrar o usuário: \n' + err)
+                req.flash('error_msg', 'Não foi possível encontrar o usuário')
+                res.redirect('/')
             })
         }
+    })
+//Login
+    router.get('/login', (req, res) => {
+        res.render('user/login')
     })
 //Exports
     module.exports = router
