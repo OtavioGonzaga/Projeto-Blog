@@ -16,14 +16,12 @@ module.exports = (passport) => {
         })
     })
     passport.use(new LocalStrategy({
-        usernameField: 'email',
-        passwordField: 'password'
+        usernameField: 'email'
     }, (email, password, done) => {
         Users.findOne({email: email}).lean().then((user) => {
-            if (!user) return done(null, false)
+            if (!user) return done(null, false, {message: 'Essa conta não existe'})
             const isValid = bcrypt.compareSync(password, user.password)
-            console.log(isValid)
-            if (!isValid) return done(null, false)
+            if (!isValid) return done(null, false, {message: 'Senha incorreta'})
             return done(null, user)
         }).catch((err) => {
             console.log(err)

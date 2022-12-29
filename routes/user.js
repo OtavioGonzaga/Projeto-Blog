@@ -109,11 +109,12 @@
     router.get('/login', (req, res) => {
         res.render('user/login')
     })
-    router.post('/login', passport.authenticate('local', {
-        successRedirect: '/',
-        successMessage: {message: 'Bem-vindo de volta'},
-        failureRedirect: './login',
-        failureMessage: {message: 'Email e/ou senha inválidos'}
-    }))
+    router.post('/login', (req, res, next) => {
+        passport.authenticate('local', {
+            successRedirect: '/',
+            failureRedirect: '/user/login',
+            failureFlash: true
+        })(req, res, next)
+    })
 //Exports
     module.exports = router
