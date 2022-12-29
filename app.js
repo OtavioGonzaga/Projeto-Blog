@@ -6,25 +6,31 @@
     const admin = require('./routes/admin')
     const path = require('path')
     const mongoose = require('mongoose')
-    const session = require('express-session')
     const flash = require('connect-flash')
     require('./models/Categories')
     const Categories = mongoose.model('categories')
     require('./models/Posts')
     const Posts = mongoose.model('posts')
     const user = require('./routes/user')
+    const passport = require('passport')
+    const session = require('express-session')
+    require('./config/auth')(passport)//passa o parâmetro esperado pela função findUser no arquivo auth.js
 //Configurações
     //sessão
         app.use(session({
-            secret: "@Kn5c42p6239avkssecreat",
+            secret: "@Kn5c42p6239avksblog",
             resave: true,
-            saveUninitialized: true
+            saveUninitialized: true,
+            cookie: {maxAge: 30 * 60 * 1000}
         }))
+        app.use(passport.initialize())
+        app.use(passport.session())
         app.use(flash())
     //middleware
         app.use((req, res, next) => {
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg = req.flash('error_msg')
+            res.locals.error = req.flash('error')
             next()
         })
     //express

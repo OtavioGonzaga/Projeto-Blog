@@ -5,6 +5,7 @@
     require('../models/Users')
     const Users = mongoose.model('users')
     const bcryptjs = require('bcryptjs')
+    const passport = require('passport')
     var dateAtt = Date.now()
     setInterval(() => {
         dateAtt = Date.now()
@@ -108,5 +109,11 @@
     router.get('/login', (req, res) => {
         res.render('user/login')
     })
+    router.post('/login', passport.authenticate('local', {
+        successRedirect: '/',
+        successMessage: {message: 'Bem-vindo de volta'},
+        failureRedirect: './login',
+        failureMessage: {message: 'Email e/ou senha inválidos'}
+    }))
 //Exports
     module.exports = router
