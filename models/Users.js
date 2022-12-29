@@ -9,7 +9,7 @@ const Users = new Schema({
         type: String,
         required: true
     },
-    adm: {
+    isAdm: {
         type: Number,
         default: 0
     },

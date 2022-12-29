@@ -6,6 +6,7 @@
     const Categories = mongoose.model("categories")
     require('../models/Posts')
     const Posts = mongoose.model('posts')
+    const {isAdm} = require('../helpers/isAdm')
     var dateAtt = Date.now()
     setInterval(() => {
         dateAtt = Date.now()
@@ -85,11 +86,11 @@
     }
 //Routes
     //Index
-        router.get("/", (req, res) => {
+        router.get("/", isAdm, (req, res) => {
             res.render("admin/index")
         })
     //Categorias
-        router.get('/categories', (req, res) => {
+        router.get('/categories', isAdm, (req, res) => {
             Categories.find().lean().sort({date: 'desc'}).then((categories) => {
                 res.render('admin/categories', {categories})
             }).catch((err) => {
@@ -99,10 +100,10 @@
             })
         })
     //Adicionar categorias
-        router.get('/categories/add', (req, res) => {
+        router.get('/categories/add', isAdm, (req, res) => {
          res.render('admin/addcategories')
         })
-        router.post('/categories/new', (req, res) => {
+        router.post('/categories/new', isAdm, (req, res) => {
             const newCategory = {
                 name: req.body.name.trim(),
                 slug: req.body.slug.trim().toLowerCase(),
@@ -128,7 +129,7 @@
             }
         })
     //Editar categorias
-        router.get('/categories/edit/:id', (req, res) => {
+        router.get('/categories/edit/:id', isAdm, (req, res) => {
             Categories.findOne({_id:req.params.id}).lean().then((categories) => {
                 console.log(req.params.id)
                 res.render('admin/editcategories', {categories})
@@ -138,7 +139,7 @@
                 res.redirect('./')
             })
         })
-        router.post('/categories/edit', (req, res) => {
+        router.post('/categories/edit', isAdm, (req, res) => {
             const editCategory = {
                 name: req.body.name.trim(),
                 slug: req.body.slug.trim().toLowerCase(),
@@ -172,7 +173,7 @@
             }
         })
     //Deletar categorias
-        router.post('/categories/delete', (req, res) => {
+        router.post('/categories/delete', isAdm, (req, res) => {
             Categories.findByIdAndDelete({_id: req.body.id}).then(() => {
                 req.flash('success_msg', 'Categoria deletada com sucesso')
                 res.redirect('./')
@@ -183,7 +184,7 @@
             })
         })
     //Adicionar postagens
-        router.get('/posts', (req, res) => {
+        router.get('/posts', isAdm, (req, res) => {
             Posts.find().populate('category').lean().sort({date: 'desc'}).then((posts) => {
                 res.render('admin/posts', {posts})
             }).catch((err) => {
@@ -192,7 +193,7 @@
                 res.redirect('./posts')
             })
         })
-        router.get('/posts/add', (req, res) => {
+        router.get('/posts/add', isAdm, (req, res) => {
             Categories.find().lean().then((categories) => {
                 res.render('admin/addpost', {categories})
             }).catch((err) => {
@@ -201,7 +202,7 @@
                 res.redirect('./')
             })
         })
-        router.post('/posts/new', ((req, res) => {
+        router.post('/posts/new', isAdm, ((req, res) => {
             const newPost = {
                 title: req.body.title.trim(),
                 slug: req.body.slug.trim().toLowerCase(),
@@ -230,7 +231,7 @@
             }
         }))
     //Editar postagens
-        router.get('/posts/edit/:id', (req, res) => {
+        router.get('/posts/edit/:id', isAdm, (req, res) => {
             Posts.findOne({_id:req.params.id}).lean().then((posts) => {
                 Categories.find().lean().then((categories) => {
                     res.render('admin/editposts', {categories, posts})
@@ -244,7 +245,7 @@
                 res.redirect('./')
             })
         })
-        router.post('/posts/edit', (req, res) => {
+        router.post('/posts/edit', isAdm, (req, res) => {
             const editPost = {
                 id: req.body.id,
                 title: req.body.title.trim(),
@@ -284,7 +285,7 @@
             }
         })
     //Deletar postagens
-        router.post('/posts/delete', (req, res) => {
+        router.post('/posts/delete', isAdm, (req, res) => {
             Posts.findByIdAndDelete({_id: req.body.id}).then(() => {
                 req.flash('success_msg', 'Postagem deletada com sucesso')
                 res.redirect('./')

@@ -21,7 +21,7 @@
             secret: "@Kn5c42p6239avksblog",
             resave: true,
             saveUninitialized: true,
-            cookie: {maxAge: 30 * 60 * 1000}
+            cookie: {maxAge: 2 * 60 * 60 * 1000}
         }))
         app.use(passport.initialize())
         app.use(passport.session())
@@ -31,6 +31,7 @@
             res.locals.success_msg = req.flash('success_msg')
             res.locals.error_msg = req.flash('error_msg')
             res.locals.error = req.flash('error')
+            res.locals.user = req.user || null
             next()
         })
     //express
