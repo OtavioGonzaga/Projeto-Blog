@@ -116,5 +116,19 @@
             failureFlash: true
         })(req, res, next)
     })
+//Logout
+    router.get('/logout', (req, res) => {
+        req.logout(err => {
+            if (err) {
+                console.log(err)
+                req.flash('error_msg', 'Houve um erro ao deslogar com a conta')
+                res.redirect('/')
+            } else {
+                req.flash('success_msg', 'Deslogado com sucesso')
+                res.redirect('/')
+            }
+        })
+        
+    })
 //Exports
     module.exports = router
