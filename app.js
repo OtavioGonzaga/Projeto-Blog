@@ -15,6 +15,7 @@
     const passport = require('passport')
     const session = require('express-session')
     require('./config/auth')(passport)//passa o parâmetro esperado pela função findUser no arquivo auth.js
+    const db = require('./config/db')
 //Configurações
     //sessão
         app.use(session({
@@ -47,7 +48,7 @@
     //mongoose
         mongoose.Promise = global.Promise
         mongoose.set('strictQuery', true)
-        mongoose.connect('mongodb://127.0.0.1/blogapp').then(() => console.log('Conectado ao MongoDB')).catch((err) => console.log('Houve um erro ao se conectar: ' + err))
+        mongoose.connect(db.mongoURI).then(() => console.log('Conectado ao MongoDB')).catch((err) => console.log('Houve um erro ao se conectar: ' + err))
     //public
         app.use(express.static(path.join(__dirname, 'public')))
 //Rotas
@@ -114,5 +115,5 @@
 //Outros
     app.use('/admin', admin)
     app.use('/user', user)
-    const port = 2073
+    const port = process.env.port || 2073
     app.listen(port, () => console.log(`Servidor ativo na porta ${port}.`))
