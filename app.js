@@ -19,7 +19,7 @@
 //Configurações
     //sessão
         app.use(session({
-            secret: "@Kn5c42p6239avksblog",
+            secret: "123teste123",
             resave: true,
             saveUninitialized: true,
             cookie: {maxAge: 2 * 60 * 60 * 1000}
@@ -115,5 +115,5 @@
 //Outros
     app.use('/admin', admin)
     app.use('/user', user)
-    const port = process.env.port || 2073
+    const port = 2073
     app.listen(port, () => console.log(`Servidor ativo na porta ${port}.`))
